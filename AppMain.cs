@@ -35,14 +35,29 @@ namespace PssSpritePerformanceTests
 			
 			_texture = new Texture2D("/Application/32.png", false);
 			
-			//_spriteBatch = new MonoGameSpriteBatch(_graphics, 256);
+			_spriteBatch = new MonoGameSpriteBatch(_graphics, 256);
 			//_spriteBatch = new MonoGameSpriteBatchNoIndex(_graphics, 256);
 			//_spriteBatch = new MonoGameSpriteBatchVector3(_graphics, 256);
-			_spriteBatch = new MonoGameSpriteBatchUnpacked(_graphics, 256);
-		}
+			//_spriteBatch = new MonoGameSpriteBatchUnpacked(_graphics, 256);
+			
+			//_spriteBatch = new DoubleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256));
+			//_spriteBatch = new TripleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256));
 
+			//_spriteBatch = new DoubleBufferedSpriteBatch(
+			//	new DoubleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256)),
+			//	new DoubleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256)));
+			
+			//_spriteBatch = new TripleBufferedSpriteBatch(
+			//	new TripleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256)),
+			//	new TripleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256)),
+			//	new TripleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256)));
+		}
+		
+		static int _y = 0;
+		
 		public static void Update ()
 		{
+			_y++;
 			// Query gamepad for current state
 			//var gamePadData = GamePad.GetData (0);
 		}
@@ -51,15 +66,15 @@ namespace PssSpritePerformanceTests
 		{
 			StopWatch.Start();
 			// Clear the screen
-			_graphics.SetClearColor (0.0f, 0.0f, 0.0f, 0.0f);
-			_graphics.Clear ();
+			_graphics.SetClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			_graphics.Clear();
 			
 			StopWatch.TakeReading(); //0
 			_spriteBatch.Begin(Matrix4.Identity);
 			StopWatch.TakeReading(); //1
 			
-			//for (int i = 0; i < 100; i++)
-				_spriteBatch.Draw(_texture, new Vector2(50, 50), Color.White);
+			for (int i = 0; i < 100; i++)
+				_spriteBatch.Draw(_texture, new Vector2(8 * i, _y), Color.White);
 			StopWatch.TakeReading(); //2
 			
 			_spriteBatch.End();
@@ -68,6 +83,8 @@ namespace PssSpritePerformanceTests
 			// Present the screen
 			_graphics.SwapBuffers ();
 			StopWatch.TakeReading(); //4
+			
+			StopWatch.Stop();
 		}
 	}
 }

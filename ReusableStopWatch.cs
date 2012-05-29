@@ -10,6 +10,9 @@ namespace PssSpritePerformanceTests
 		Stopwatch _stopWatch = new Stopwatch();
 		long _lastReading;
 		
+		const int Totals = 60;
+		public long[] PreviousTotals = new long[Totals];
+		
 		public ReusableStopWatch ()
 		{
 		}
@@ -23,6 +26,11 @@ namespace PssSpritePerformanceTests
 		
 		public void Stop()
 		{
+			long total = _stopWatch.ElapsedTicks;
+			for (int i = 0; i < Totals - 1; i++)
+				PreviousTotals[i] = PreviousTotals[i + 1];
+			PreviousTotals[Totals - 1] = total;
+			
 			_stopWatch.Stop();
 			_stopWatch.Reset();
 		}

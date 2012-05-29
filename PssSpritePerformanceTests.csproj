@@ -49,6 +49,8 @@
     <Compile Include="SpriteBatch\MonoGameSpriteBatchNoIndex.cs" />
     <Compile Include="SpriteBatch\MonoGameSpriteBatchVector3.cs" />
     <Compile Include="SpriteBatch\MonoGameSpriteBatchUnpacked.cs" />
+    <Compile Include="SpriteBatch\DoubleBufferedSpriteBatch.cs" />
+    <Compile Include="SpriteBatch\TripleBufferedSpriteBatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Texture.fcg" />
