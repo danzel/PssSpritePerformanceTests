@@ -16,6 +16,7 @@ namespace PssSpritePerformanceTests
 		private static GraphicsContext _graphics;
 		private static Texture2D _texture;
 		private static ISpriteBatch _spriteBatch;
+		private static ISpriteBatch _spriteBatch2;
 		
 		public static void Main (string[] args)
 		{
@@ -51,6 +52,10 @@ namespace PssSpritePerformanceTests
 			//	new TripleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256)),
 			//	new TripleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256)),
 			//	new TripleBufferedSpriteBatch(new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256), new MonoGameSpriteBatch(_graphics, 256)));
+			
+			
+			
+			//_spriteBatch2 = new MonoGameSpriteBatch(_graphics, 256);
 		}
 		
 		static int _y = 0;
@@ -80,9 +85,21 @@ namespace PssSpritePerformanceTests
 			_spriteBatch.End();
 			StopWatch.TakeReading(); //3
 			
+			if (_spriteBatch2 != null)
+			{
+				_spriteBatch2.Begin (Matrix4.Identity);
+				for (int i = 0; i < 100; i++)
+					_spriteBatch2.Draw(_texture, new Vector2(8 * i, _y), Color.White);
+				StopWatch.TakeReading(); //4
+				
+				_spriteBatch2.End();
+				StopWatch.TakeReading(); //5
+			}
+			
+			
 			// Present the screen
 			_graphics.SwapBuffers ();
-			StopWatch.TakeReading(); //4
+			StopWatch.TakeReading(); //4 or 6
 			
 			StopWatch.Stop();
 		}
